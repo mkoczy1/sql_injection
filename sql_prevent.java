@@ -14,8 +14,8 @@ public class SQLInjectionPrevention {
     static {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://localhost:3306/demo");
-        config.setUsername("root");
-        config.setPassword("password"); // Sollte aus einem sicheren Speicherort geladen werden
+        config.setUsername(System.getenv("DB_USERNAME")); // Laden aus Umgebungsvariablen
+        config.setPassword(System.getenv("DB_PASSWORD")); // Laden aus Umgebungsvariablen
         dataSource = new HikariDataSource(config);
     }
 
