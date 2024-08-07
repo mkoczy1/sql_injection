@@ -9,9 +9,9 @@ public class SQLInjectionExample {
     public static void main(String[] args) {
         try {
             // Verbindungsdetails zur Datenbank
-            String url = "jdbc:mysql://localhost:3306/demo";
-            String username = "root";
-            String password = "password";
+            String url;
+            String username;
+            String password;
             
             // Verbindung zur Datenbank herstellen
             Connection connection = DriverManager.getConnection(url, username, password);
