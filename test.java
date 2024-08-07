@@ -1,10 +1,10 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Scanner;
 
-public class SQLInjectionPrevention {
+public class SQLInjectionExample {
 
     public static void main(String[] args) {
         try {
@@ -23,12 +23,11 @@ public class SQLInjectionPrevention {
             System.out.print("Enter your password: ");
             String userPassword = scanner.nextLine();
             
-            // **Sichere SQL-Abfrage mit Prepared Statement**
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userInput);
-            preparedStatement.setString(2, userPassword);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            // **Unsichere SQL-Abfrage ohne Prepared Statement**
+            String query = "SELECT * FROM users WHERE username = '" + userInput + "' AND password = '" + userPassword + "'";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            
             while (resultSet.next()) {
                 System.out.println("User: " + resultSet.getString("username"));
             }
