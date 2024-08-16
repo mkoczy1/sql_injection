@@ -1,0 +1,33 @@
+name: Java CI with Maven and JaCoCo
+
+on:
+  push:
+    branches:
+      - main  # oder den Namen deiner Hauptbranch
+  pull_request:
+    branches:
+      - main  # oder den Namen deiner Hauptbranch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'  # oder die Version von Java, die du verwendest
+
+    - name: Build with Maven
+      run: mvn clean test
+
+    - name: Generate JaCoCo Report
+      run: mvn jacoco:report
+
+    - name: Upload coverage to Codacy
+      run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
